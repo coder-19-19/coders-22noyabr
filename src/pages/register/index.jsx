@@ -4,8 +4,9 @@ import {Button, Card, CardBody, CardHeader, CardTitle, Col, FormText, Input, Lab
 import classNames from "classnames";
 import Logo from "../../assets/react.svg";
 import {useNavigate} from 'react-router-dom'
+import { GoogleLogin ,GoogleOAuthProvider } from '@react-oauth/google';
 
-const Login = () => {
+const Register = () => {
     const naviagte = useNavigate()
     const {handleSubmit, control, formState:{errors}} = useForm()
 
@@ -42,6 +43,16 @@ const Login = () => {
                         </CardHeader>
                         <CardBody>
                             <img src={Logo} alt="Image"/>
+                            <GoogleOAuthProvider clientId="<your_client_id>">
+                            <GoogleLogin
+                                onSuccess={credentialResponse => {
+                                    console.log(credentialResponse);
+                                }}
+                                onError={() => {
+                                    console.log('Login Failed');
+                                }}
+                            />;
+                            </GoogleOAuthProvider>
                             <form onSubmit={handleSubmit(onSubmit)}>
                                 <Controller render={({field:{value,onChange}}) => (
                                     <div>
@@ -62,4 +73,4 @@ const Login = () => {
     );
 }
 
-export default Login
+export default Register
